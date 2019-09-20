@@ -1,112 +1,160 @@
 // PLAN FOR THE GAME LOGIC:
+// 1) Make grid for the board: 10x10 (referencing mike's code), and enable the charachter across the board (referencing mike's code). DONE!
+// 2) Make it start on the bottom row in the middle on load. DONE!
+// 3) Win condition is getting a charachter to one home cell. DONE!
+// 4) Make a simple obstacles that doesnt move. DONE!
+// 5) Deal with collision - Use if statements with === to figure out whether two things are in the same cell? DONE!
+// 6) Add different events for whether you charachter is "riding" on the element, or beeing "killed" by the element? DONE!
 
-// 1) Make grid for the board: 10x10 (referencing mike's code);
+// TO DO:  
+// 7) Figure out how to move a log as one element.
 
-// 2) Enable the charachter across the board (referencing mike's code);
+// 8) Add more homes, obstacles, and logs of different sizes and speeds.
 
-// 9) Win condition is getting three charachters to the other side unscathed.
+// 10) Game reset animation for when charachter is killed.
 
-//  make a simple obstacles that doesnt move. if it hits the obstacle, it dies. Use if statements with === to figure out whether two things are in the same cell? 
+// 11) Start game button that makes everything start moving.
 
-// 3) Animate obstables to look like they are moving across the screen using same logic for moving the main charachter + setInterval loops? 
-//   
- // Or can/should it be done in CSS with keyframes and transform (like we did with the red car in week one)? Perhaps put them in classes to make them move together at some pace?
+// 12) Auto generated scoreboard adding points as the charachter makes its way through the board;
 
-// 4) Auto-generate the board with the elements ready to start moving on load - setInterval loop and add event listener to 'load?' (how was that part of the HW done?);
-
-// 7) Once figured out how to do step 5, add event if true? But then add different events for whether you charachter is "riding" on the element, 
-//    or beeing "killed" by the element? Not sure how to do that. Also think about how to visually allow two things to be on top of each other? 
-// think about both what the frog has jumped onto, but also if something 'runs over the frog.  if statement that involves a time loop, checking where the frog is every second ticks or something has changed.
-
-// 8) Automatic game reset upon charachter either being killed or getting to the other side.
-
-// 10) Loose condition when charachter ir killed, even if player has managed to get one or two charachters over to the other side before.
-
+// 13) Figure out how to move the charachter across by jumping over things. Use if statements related to the keycodes?
 
 // POTENTIAL EXTRAS:
-// - Auto generated scoreboard adding points as the charachter makes its way through the board;
-// 5) Figure out how to move the charachter across by jumping over things. Use if statements related to the keycodes?
 // - Add sounds and animations;
 // - Add food items it can eat on the way to add extra points - reference Mike's code from the grid?
 // - Add more obstacles, moving at different paces, and possibly randomly animated, think crocodile open mouth;
 // - Add higher difficulty level with more items and more charachters to move across the board to win (from three to five);
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Mike's grid code:
-
 document.addEventListener('DOMContentLoaded', () => {
-  // this determines the square size of the board:
-  const width = 10
-  // reference the grid in html:
+
+  const width = 11
   const grid = document.querySelector('.grid')
-  // put the cells into an array:
   const cells = []
-  // define the starting point: 
-  let playerIdx = 0
+  let playerIdx = 115
+  let homeIdx = 0
 
-  // function to attach the player-symbol to the (starting) target:
-  function handleClick(e) {
-    e.target.classList.add('player')
-  }
+  let car1Idx = 97
+  let car2Idx = 81
+  let car3Idx = 73
+  
+  let log1Array = [35, 36, 37]
+ 
+  // function handleClick(e) {
+  //   e.target.classList.add('player')
+  // }
 
-  // I'm not quite sure what this really does... defining the barriers of the board?
-  for(let i = 0; i < width ** 2; i++) {
+  // SETTING UP THE BOARD AND MAKING THE PLAYER MOVE AROUND ON IT:
+  for (let i = 0; i < width ** 2; i++) {
     const cell = document.createElement('DIV')
 
-    cell.addEventListener('click', handleClick)
+    // cell.addEventListener('click', handleClick)
 
     grid.appendChild(cell)
     cells.push(cell)
   }
 
-  // Attaches an element (in this case the charachter) to the cell you have clicked on:
   cells[playerIdx].classList.add('player')
+  cells[homeIdx].classList.add('home')
+  cells[car1Idx].classList.add('car')
+  cells[car2Idx].classList.add('car')
+  cells[car3Idx].classList.add('car')
 
-  // Defines the way to make the charachter move with keyup: 
+  log1Array.forEach(logIdx => cells[logIdx].classList.add('log'))
+
   document.addEventListener('keyup', (e) => {
 
-    // Sets out the logic for how the charachter is allowed to move on the board without falling off it. 
-    // Also defines how to remove and add the player from one cell to another so that he can actually move:
     cells[playerIdx].classList.remove('player')
     const x = playerIdx % width
     const y = Math.floor(playerIdx / width)
 
-    switch(e.keyCode) {
-      case 37: if(x > 0) playerIdx -= 1
+    switch (e.keyCode) {
+      case 37: if (x > 0) playerIdx -= 1
         break
-      case 38: if(y > 0) playerIdx -= width
+      case 38: if (y > 0) playerIdx -= width
         break
-      case 39: if(x < width - 1) playerIdx += 1
+      case 39: if (x < width - 1) playerIdx += 1
         break
-      case 40: if(y < width - 1)playerIdx += width
+      case 40: if (y < width - 1) playerIdx += width
         break
     }
-
     cells[playerIdx].classList.add('player')
+
+    winCondition(playerIdx, homeIdx)
   })
+
+
+  // // WIN CONDITION:
+  function winCondition() {
+    if (playerIdx === homeIdx) {
+      cells[homeIdx].classList.remove('home')
+      cells[playerIdx].classList.add('player')
+      alert('You win!')
+    } 
+  }
+
+
+  // CAR MOVEMENT:
+  const car1Movement = setInterval(() => {
+    const x = car1Idx % width
+    cells[car1Idx].classList.remove('car')
+    if (x === 0) car1Idx += width
+    car1Idx--
+    cells[car1Idx].classList.add('car')
+  }, 500)
+
+  const car2Movement = setInterval(() => {
+    const x = car2Idx % width
+    cells[car2Idx].classList.remove('car')
+    if (x === 0) car2Idx += width
+    car2Idx--
+    cells[car2Idx].classList.add('car')
+  }, 500)
+
+  const car3Movement = setInterval(() => {
+    const x = car3Idx % width
+    cells[car3Idx].classList.remove('car')
+    if (x === 0) car3Idx += width
+    car3Idx--
+    cells[car3Idx].classList.add('car')
+  }, 500)
+
+
+  // LOG MOVEMENT: NOT WORKING!
+  log1Array.forEach(() => {
+    const log1movement = setInterval(() => {
+      const x = log1Array % width
+      cells[log1Array].classList.remove('log')
+      if (x === 0) log1Array += width
+      log1Array--
+      cells[log1Array].classList.add('log')
+    }, 500)
+  })
+
+  // COLLISION logic:
+  setInterval(checkCollision, 60)
+
+  function checkCollision() {
+    if (cells[playerIdx].classList.contains('car')) 
+      alert('You lose!')
+  } 
+
+  // // LOG RIDING LOGIC: 
+  // function checkIfLog() {
+  //   if (cells[playerIdx].classList.contains('log')) 
+    
+  // }
+
+
+
+
+
+
+
+
 })
+
+
 
 
 
