@@ -30,7 +30,7 @@ body {
 }
 
 .grid div.player {
-  background-color: blue;
+  background-color: rgb(228, 20, 193);
   background-size: 300px;
   background-position-x: 0;
   background-position-y: 0;
