@@ -23,17 +23,18 @@ body {
 }
 
 .grid div {
-  border: 1px solid;
   flex-grow: 1;
   height: 9%;
   width: 9%;
+  background-color: blue;
 }
 
-.grid div.player {
-  background-color: rgb(228, 20, 193);
-  background-size: 300px;
-  background-position-x: 0;
-  background-position-y: 0;
+.grid div.wall {
+background-color: rgb(117, 57, 57);
+}
+
+.grid div.street {
+  background-color: white;
 }
 
 .grid div.home {
@@ -56,4 +57,31 @@ body {
   background-position-x: 0;
   background-position-y: 0;
 }
+
+.grid div.player {
+  background-color: rgb(228, 20, 193);
+  background-size: 300px;
+  background-position-x: 0;
+  background-position-y: 0;
+}
+
+.screen {
+  border: solid;
+  width: 70px;
+  height: 20px;
+  text-align: center;
+}
+
+.hide {
+  display: none;
+}
+
+.win {
+  font-size: 50px;
+}
+
+.lose {
+  font-size: 50px;
+}
+
 

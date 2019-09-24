@@ -1,4 +1,4 @@
-// PLAN FOR THE GAME LOGIC:
+//   STEPS TO COMPLETE GAME:
 // - Make grid for the board: 10x10 (referencing mike's code), and enable the charachter across the board (referencing mike's code). DONE!
 // - Make it start on the bottom row in the middle on load. DONE!
 // - Win condition is getting a charachter to one home cell. DONE!
@@ -7,54 +7,52 @@
 // - Add different events for whether you charachter is "riding" on the element, or beeing "killed" by the element? DONE!
 // - Make two logs and make them move. DONE!
 // - Make the player jump. DONE!
+// - Start game button that makes everything start moving. DONE!
+// - Reset button resetting the game. DONE!
+// - Move logs. DONE!
+// - Attach player to the logs. DONE!
+// - Timer and display counter. DONE!
+// - Set up so that if the player rides to the end of the board on the log you lose. DONE!
+// - Set up the water cells properly. DONE!
 
-// TO DO:  
-// 7) Attach the player to the log with the interval.
+//   WEDNESDAY:  
+// - Something is screwed up with how to jump off the log - can't clear the interval properly.
+// - Stop the timer when win and loose. 
+// - Display final time on winning screen, and rank the best three.
+// - Styling (+ sounds and animations).
 
-// 8) Set up the water cells to be dangerous.
-
-// 9) An if function for displaying you loose/win on the screen - remove grid.
-
-// 10) Start game button that makes everything start moving.
-
-// 11) Timer display storing best time. 
-
-// 12) Auto generated scoreboard adding points as the charachter makes its way through the board;
-
-// 13) Add higher difficulty level with more obstacles (moving at different paces and randomly changed (ie croc), 
+//   WEDNESDAY/THURSDAY:
+// - Auto generated scoreboard adding points as the charachter makes its way through the board.
+// - Add higher difficulty level with more obstacles (moving at different paces and randomly changed (ie croc), 
 //     and more charachters to move across the board to win (from one to three to five).
-
-// 14) Add food items it can eat on the way to add extra points - reference Mike's code from the grid?
-
-// 15) Style, sounds, and animations;
-
-// 16) Refactor my code;
-
+// - Add food items it can eat on the way to add extra points.
+// - Refactor my code.
 
 document.addEventListener('DOMContentLoaded', () => {
 
   const width = 11
   const grid = document.querySelector('.grid')
-  const startButton = document.querySelector('#start')
-  const resetButton = document.querySelector('#reset')
+  const startButton = document.querySelector('.start')
+  const resetButton = document.querySelector('.reset')
+  const win = document.querySelector('.win')
+  const lose = document.querySelector('.lose')
+  const screen = document.querySelector('.screen')
+
   const cells = []
   let playerIdx = 115
   
-  let home1Idx = 0
-  let home2Idx = 3
-  let home3Idx = 6
-  let home4Idx = 9
-  
-  let car1Idx = 97
-  let car2Idx = 81
-  let car3Idx = 73
-  
-  let log1Array = [35, 36, 37]
-  let log2Array = [28, 29, 30, 31]
+  let homeArray = [0, 3, 6, 9]
+  let carArray = [73, 80, 89, 93, 97]
+  let logArray = [12, 13, 14, 15, 35, 36, 37, 28, 29, 30, 31]
+  let wallArray = [55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65]
+  let streetArray = [66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 
+    77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 
+    92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 
+    106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120]
 
   let isOnLog = false
 
-  // SETTING UP THE BOARD AND MAKING THE PLAYER MOVE AROUND ON IT:
+  // SETTING UP THE BOARD:
   for (let i = 0; i < width ** 2; i++) {
     const cell = document.createElement('DIV')
 
@@ -64,17 +62,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
   cells[playerIdx].classList.add('player')
 
-  cells[home1Idx].classList.add('home')
-  cells[home2Idx].classList.add('home')
-  cells[home3Idx].classList.add('home')
-  cells[home4Idx].classList.add('home')
+  homeArray.forEach(house => {
+    cells[house].classList.add('home')
+  })
+  carArray.forEach(car => {
+    cells[car].classList.add('car')
+  })
+  logArray.forEach(log => {
+    cells[log].classList.add('log')
+  })
+  wallArray.forEach(brick => {
+    cells[brick].classList.add('wall')
+  })
+  streetArray.forEach(pebble => {
+    cells[pebble].classList.add('street')
+  })
 
-  cells[car1Idx].classList.add('car')
-  cells[car2Idx].classList.add('car')
-  cells[car3Idx].classList.add('car')
+  win.classList.add('hide')
+  lose.classList.add('hide')
 
 
-  // SETTING UP KEYSTROKE MOVEMENTS FOR THE PLAYER
+  // KEYSTROKE MOVEMENTS FOR THE PLAYER:
   document.addEventListener('keyup', (e) => {
 
     cells[playerIdx].classList.remove('player')
@@ -91,151 +99,127 @@ document.addEventListener('DOMContentLoaded', () => {
       case 40: if (y < width - 1) playerIdx += width
         break
 
-        // SETTING UP MOVEMENT FOR ENABLING JUMPS WITH SPACEBAR
+        // ALLOWING THE PLAYER TO JUMP:
       case 32: if (y > 0) playerIdx -= width * 2
         break 
     } 
     cells[playerIdx].classList.add('player')
+
+    // CHECKING CONDITIOND AT EACH PLAYER MOVE:
+    winCondition(playerIdx, homeArray)
+    checkIfInWater()
     checkLog()
-    winCondition(playerIdx, home1Idx, home2Idx, home3Idx, home4Idx)
   })
 
   function checkLog() {
-    // check if frogger is on a log now
     if (cells[playerIdx].classList.contains('log')) {
-      // isOnLog = playerIdx
-      // return isOnLog
       isOnLog = true
-      
-    // if he is, start moving him - 1 index at the same speed as the log
-    //     do that in your log movement function, checking the isOnLog variable
-    // if not, do nothing
     } else {
       isOnLog = false
     }
   }
 
-  // // WIN CONDITION:
-  function winCondition() {
-    if (playerIdx === home1Idx) {
-      cells[home1Idx].classList.remove('home')
-      cells[playerIdx].classList.add('player')
-      alert('You win!')
-    } else if (playerIdx === home2Idx) {
-      cells[home2Idx].classList.remove('home')
-      cells[playerIdx].classList.add('player')
-      alert('You win!')
-    } else if (playerIdx === home3Idx) {
-      cells[home3Idx].classList.remove('home')
-      cells[playerIdx].classList.add('player')
-      alert('You win!')
-    } else if (playerIdx === home4Idx) {
-      cells[home4Idx].classList.remove('home')
-      cells[playerIdx].classList.add('player')
-      alert('You win!')
+  function checkIfInWater() {
+    if (cells[playerIdx].classList.contains('log')) {
+      console.log('Riding')
+    } else if (playerIdx > 0 && playerIdx < 55) {
+      setTimeout(() => {
+        grid.classList.add('hide')
+      }, 200)
+      setTimeout(() => {
+        lose.classList.replace('hide', 'lose')
+      }, 400)
     }
   }
 
-  // START BUTTON - DOESNT WORK.
-  // startButton.addEventListener('click', {
+  // START THE GAME:
+  startButton.addEventListener('click', () => {
 
-  // })
-  // CAR MOVEMENT:
-  const car1Movement = setInterval(() => {
-    const x = car1Idx % width
-    cells[car1Idx].classList.remove('car')
-    if (x === 0) car1Idx += width
-    car1Idx--
-    cells[car1Idx].classList.add('car')
-  }, 700)
+    // CAR MOVEMENT:
+    function moveCars() {
+      cells.forEach(cell => cell.classList.remove('car'))
+      carArray.forEach((car) => {
+        cells[car].classList.add('car')
+      })
+      carArray = carArray.map((car) => {
+        if (car % width === 0) return car + width - 1
+        return car - 1
+      })
+      function checkCollision() {
+        if (cells[playerIdx].classList.contains('car')) {
+          setTimeout(() => {
+            grid.classList.add('hide')
+          }, 200)
+          setTimeout(() => {
+            lose.classList.replace('hide', 'lose')
+          }, 400)
+        }  
+      } 
+      setInterval(checkCollision, 60)
+    }
+    moveCars()
+    const carTimer = setInterval(moveCars, 1000)
 
-  const car2Movement = setInterval(() => {
-    const x = car2Idx % width
-    cells[car2Idx].classList.remove('car')
-    if (x === 0) car2Idx += width
-    car2Idx--
-    cells[car2Idx].classList.add('car')
-  }, 700)
+    // LOG MOVEMENT
+    function moveLogs() {
+      checkLog()
+      cells.forEach(cell => cell.classList.remove('log'))
+      logArray.forEach((log) => {
+        cells[log].classList.add('log')
+      })
+      logArray = logArray.map((log) => {
+        if (log % width === 0) return log + width - 1
+        return log - 1
+      })
+      if (isOnLog) {
+        clearInterval(moveLogs)
+        cells[playerIdx].classList.remove('player')
+        playerIdx--
+        cells[playerIdx].classList.add('player')
+      }
+      if (isOnLog && playerIdx % width === 0) {
+        setTimeout(() => {
+          grid.classList.add('hide')
+        }, 200)
+        setTimeout(() => {
+          lose.classList.replace('hide', 'lose')
+        }, 400)
+      }
+    }
+    moveLogs()
+    const logTimer = setInterval(moveLogs, 1000)
+    timerThing()
+  })
 
-  const car3Movement = setInterval(() => {
-    const x = car3Idx % width
-    cells[car3Idx].classList.remove('car')
-    if (x === 0) car3Idx += width
-    car3Idx--
-    cells[car3Idx].classList.add('car')
-  }, 700)
-
-  // LOG MOVEMENT:
-  // log1Array.forEach((logIdx) => {
-  //   const log1movement = setInterval(() => {
-  //     const x = logIdx % width
-  //     cells[logIdx].classList.remove('log')
-  //     if (x === 0) logIdx += width
-  //     logIdx--
-  //     cells[logIdx].classList.add('log')
-  //     console.log(isOnLog, playerIdx)
-  //     if (isOnLog) {
-  //       cells[playerIdx].classList.remove('log')
-  //       cells[playerIdx].classList.add('player')
-  //       playerIdx--
-  //     }
-  //     // if (playerIdx === logIdx) {
-  //     //   cells[logIdx].classList.replace('log', 'player')
-  //     //   playerIdx--
-  //     // }
-  //   }, 1000)
-  // }) 
-
-  // 
-  const logTimer1 = setInterval(() => {
-    console.log(1)
-    cells.forEach(cell => cell.classList.remove('log'))
-    log1Array.forEach((log) => {
-      cells[log].classList.add('log')
-    })
-    log1Array = log1Array.map((log) => {
-      if (log % width === 0) return log + width - 1
-      return log - 1
-    })
-  }, 1000)
-  
-  const logTimer2 = setInterval(() => {
-    console.log(2)
-    cells.forEach(cell => cell.classList.remove('log'))
-    log2Array.forEach((log) => {
-      cells[log].classList.add('log')
-    })
-    log2Array = log2Array.map((log) => {
-      if (log % width === 0) return log + width - 1
-      return log - 1
-    })
-  }, 1000)
-
-
-  // log2Array.forEach((logIdx) => {
-  //   const log2movement = setInterval(() => {
-  //     const x = logIdx % width
-  //     cells[logIdx].classList.remove('log')
-  //     if (x === 0) logIdx += width
-  //     logIdx--
-  //     cells[logIdx].classList.add('log')
-  //   }, 1000)
-  // }) 
-
-  // COLLISION LOGIC:
-  setInterval(checkCollision, 60)
-
-  function checkCollision() {
-    if (cells[playerIdx].classList.contains('car')) {
-      alert('You lose!')
-    }  
+  // // WIN CONDITION:
+  function winCondition() {
+    if (cells[playerIdx].classList.contains('home')) {
+      // clearInterval(timerThing)  
+      setTimeout(() => {
+        grid.classList.add('hide')
+      }, 200)
+      setTimeout(() => {
+        win.classList.replace('hide', 'win')
+      }, 400)
+    }
   } 
 
+  // TIMER:
+  let milliseconds = 0
+  function timerThing() {
+    setInterval(() => {
+      milliseconds++
+      const date = new Date(null)
+      date.setSeconds(milliseconds)
+      const timeString = date.toISOString().substr(11, 8)
+      screen.innerHTML = timeString
+    }, 17)
+  }
 
-
-
-
-
+  // RESET BUTTON:
+  resetButton.addEventListener('click', () => {
+    location.reload(1)
+  })
 
 })
 
