@@ -14,19 +14,20 @@
 // - Timer and display counter. DONE!
 // - Set up so that if the player rides to the end of the board on the log you lose. DONE!
 // - Set up the water cells properly. DONE!
+// - Something is screwed up with how to jump off the log - can't clear the interval properly, and the timer doesn't reset. DONE!
+// - Cannot clear the timer interval for when in the water. DONE!
+// - Display and remove Yoda at random? DONE!
+// - Display Boba Fett at random? DONE!
+// - Displaying win AND lose on win. FIX! DONE!
 
-//   WEDNESDAY:  
-// - Something is screwed up with how to jump off the log - can't clear the interval properly.
-// - Stop the timer when win and loose. 
-// - Display final time on winning screen, and rank the best three.
-// - Styling (+ sounds and animations).
+//   PROBLEMS: 
+// - Add points for hitting Yoda.
+// - Add kill condition for hitting Boba.
+// - Auto-generated Yoda score
 
-//   WEDNESDAY/THURSDAY:
-// - Auto generated scoreboard adding points as the charachter makes its way through the board.
-// - Add higher difficulty level with more obstacles (moving at different paces and randomly changed (ie croc), 
-//     and more charachters to move across the board to win (from one to three to five).
-// - Add food items it can eat on the way to add extra points.
-// - Refactor my code.
+//   TO DO:
+// - Styling, animation, sounds
+// - Refactor
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -37,6 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const win = document.querySelector('.win')
   const lose = document.querySelector('.lose')
   const screen = document.querySelector('.screen')
+  let playing = false
 
   const cells = []
   let playerIdx = 115
@@ -51,6 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
     106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120]
 
   let isOnLog = false
+  let timer = null
 
   // SETTING UP THE BOARD:
   for (let i = 0; i < width ** 2; i++) {
@@ -100,17 +103,32 @@ document.addEventListener('DOMContentLoaded', () => {
         break
 
         // ALLOWING THE PLAYER TO JUMP:
-      case 32: if (y > 0) playerIdx -= width * 2
+      case 32: {
+        e.preventDefault()
+        if (y > 0) playerIdx -= width * 2
+      }
         break 
     } 
     cells[playerIdx].classList.add('player')
 
-    // CHECKING CONDITIOND AT EACH PLAYER MOVE:
+    // CHECKING CONDITION AT EACH PLAYER MOVE:
     winCondition(playerIdx, homeArray)
     checkIfInWater()
-    checkLog()
   })
 
+  // TIMER:
+  let milliseconds = 0
+  function timerThing() {
+    timer = setInterval(() => {
+      milliseconds++
+      const date = new Date(null)
+      date.setSeconds(milliseconds)
+      const timeString = date.toISOString().substr(11, 8)
+      screen.innerHTML = timeString
+    }, 17)
+  }
+
+  // CONDITION FOR PLAYER ON LOG:
   function checkLog() {
     if (cells[playerIdx].classList.contains('log')) {
       isOnLog = true
@@ -119,10 +137,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // DROWN CONDITION
   function checkIfInWater() {
     if (cells[playerIdx].classList.contains('log')) {
       console.log('Riding')
-    } else if (playerIdx > 0 && playerIdx < 55) {
+    } else if (cells[playerIdx].classList.contains('home')) {
+      console.log('Win')
+    } else if (playerIdx <= 55) {
+      console.log('this lose condition triggered')
+      clearInterval(timer) 
+      playing = false  
       setTimeout(() => {
         grid.classList.add('hide')
       }, 200)
@@ -134,6 +158,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // START THE GAME:
   startButton.addEventListener('click', () => {
+    if (playing) return
+    playing = true
 
     // CAR MOVEMENT:
     function moveCars() {
@@ -147,6 +173,8 @@ document.addEventListener('DOMContentLoaded', () => {
       })
       function checkCollision() {
         if (cells[playerIdx].classList.contains('car')) {
+          clearInterval(timer)  
+          playing = false 
           setTimeout(() => {
             grid.classList.add('hide')
           }, 200)
@@ -163,6 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // LOG MOVEMENT
     function moveLogs() {
       checkLog()
+      // checkBoba()
       cells.forEach(cell => cell.classList.remove('log'))
       logArray.forEach((log) => {
         cells[log].classList.add('log')
@@ -172,12 +201,14 @@ document.addEventListener('DOMContentLoaded', () => {
         return log - 1
       })
       if (isOnLog) {
-        clearInterval(moveLogs)
         cells[playerIdx].classList.remove('player')
         playerIdx--
         cells[playerIdx].classList.add('player')
       }
       if (isOnLog && playerIdx % width === 0) {
+        clearInterval(timer)
+        clearInterval(logTimer) 
+        playing = false 
         setTimeout(() => {
           grid.classList.add('hide')
         }, 200)
@@ -189,12 +220,47 @@ document.addEventListener('DOMContentLoaded', () => {
     moveLogs()
     const logTimer = setInterval(moveLogs, 1000)
     timerThing()
+
+    // RANDOM YODA:
+    const yodaSurprise = setInterval(() => {
+      let randomYoda = wallArray[0] + Math.floor(Math.random() * width)
+
+      cells[randomYoda].classList.remove('wall')
+      cells[randomYoda].classList.add('yoda')
+
+      setTimeout((yodaSurprise) => {
+        cells[randomYoda].classList.remove('yoda')
+        cells[randomYoda].classList.add('wall')
+      }, 1500)
+    }, 1000)
+    
+    // RANDOM BOBA:
+    const bobaThreat = setInterval(() => {
+      let randomBoba = logArray[0] + Math.floor(Math.random() * width)
+
+      cells[randomBoba].classList.add('boba')
+
+      setTimeout((bobaThreat) => {
+        cells[randomBoba].classList.remove('boba')
+      }, 5000)
+    }, 2000)
+
+    if (cells[playerIdx].classList.contains('boba')) {
+      clearInterval(timer) 
+      playing = false  
+      setTimeout(() => {
+        grid.classList.add('hide')
+      }, 200)
+      setTimeout(() => {
+        lose.classList.replace('hide', 'lose')
+      }, 400)
+    }
   })
 
   // // WIN CONDITION:
   function winCondition() {
     if (cells[playerIdx].classList.contains('home')) {
-      // clearInterval(timerThing)  
+      clearInterval(timer)  
       setTimeout(() => {
         grid.classList.add('hide')
       }, 200)
@@ -203,18 +269,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 400)
     }
   } 
-
-  // TIMER:
-  let milliseconds = 0
-  function timerThing() {
-    setInterval(() => {
-      milliseconds++
-      const date = new Date(null)
-      date.setSeconds(milliseconds)
-      const timeString = date.toISOString().substr(11, 8)
-      screen.innerHTML = timeString
-    }, 17)
-  }
 
   // RESET BUTTON:
   resetButton.addEventListener('click', () => {
