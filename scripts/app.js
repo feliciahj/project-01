@@ -19,32 +19,34 @@
 // - Display and remove Yoda at random? DONE!
 // - Display Boba Fett at random? DONE!
 // - Displaying win AND lose on win. FIX! DONE!
-
-//   PROBLEMS: 
-// - Add points for hitting Yoda.
-// - Add kill condition for hitting Boba.
-// - Auto-generated Yoda score
+// - Add points for hitting Yoda. DONE!
+// - Add kill condition for hitting Boba. DONE!
+// - Auto-generated Yoda score. DONE!
 
 //   TO DO:
 // - Styling, animation, sounds
-// - Refactor
 
 document.addEventListener('DOMContentLoaded', () => {
 
   const width = 11
+  const intro = document.querySelector('.intro')
   const grid = document.querySelector('.grid')
   const startButton = document.querySelector('.start')
   const resetButton = document.querySelector('.reset')
   const win = document.querySelector('.win')
   const lose = document.querySelector('.lose')
-  const screen = document.querySelector('.screen')
-  let playing = false
-
-  const cells = []
-  let playerIdx = 115
+  const screen = document.querySelector('.timer')
+  const scoreBoard = document.querySelector('.scoreboard')
+  const currentScore = document.querySelector('#amount')
   
-  let homeArray = [0, 3, 6, 9]
-  let carArray = [73, 80, 89, 93, 97]
+  const cells = []
+  let playing = false
+  let playerIdx = 115
+  let scoreCounter = 0
+  
+  let homeArray = [0, 2, 4, 6, 8, 10]
+  let carArray = [76, 80, 93]
+  let trooperArray = [73, 89, 97]
   let logArray = [12, 13, 14, 15, 35, 36, 37, 28, 29, 30, 31]
   let wallArray = [55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65]
   let streetArray = [66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 
@@ -70,6 +72,9 @@ document.addEventListener('DOMContentLoaded', () => {
   })
   carArray.forEach(car => {
     cells[car].classList.add('car')
+  })
+  trooperArray.forEach(trooper => {
+    cells[trooper].classList.add('trooper')
   })
   logArray.forEach(log => {
     cells[log].classList.add('log')
@@ -111,9 +116,11 @@ document.addEventListener('DOMContentLoaded', () => {
     } 
     cells[playerIdx].classList.add('player')
 
-    // CHECKING CONDITION AT EACH PLAYER MOVE:
+    // CHECKING CONDITIONS AT EACH PLAYER MOVE:
     winCondition(playerIdx, homeArray)
     checkIfInWater()
+    updateScore()
+    bobaCheck()
   })
 
   // TIMER:
@@ -126,6 +133,28 @@ document.addEventListener('DOMContentLoaded', () => {
       const timeString = date.toISOString().substr(11, 8)
       screen.innerHTML = timeString
     }, 17)
+  }
+
+  // SCORE:
+  function updateScore() {
+    if (cells[playerIdx].classList.contains('yoda')) {
+      scoreCounter += 10
+      currentScore.innerHTML = `You have ${scoreCounter} points!`
+    }
+  }
+
+  // CHECKING FOR BOBA:
+  function bobaCheck() {
+    if (cells[playerIdx].classList.contains('boba')) {
+      clearInterval(timer) 
+      playing = false  
+      setTimeout(() => {
+        grid.classList.add('hide')
+      }, 200)
+      setTimeout(() => {
+        lose.classList.replace('hide', 'lose')
+      }, 400)
+    }
   }
 
   // CONDITION FOR PLAYER ON LOG:
@@ -144,7 +173,6 @@ document.addEventListener('DOMContentLoaded', () => {
     } else if (cells[playerIdx].classList.contains('home')) {
       console.log('Win')
     } else if (playerIdx <= 55) {
-      console.log('this lose condition triggered')
       clearInterval(timer) 
       playing = false  
       setTimeout(() => {
@@ -158,6 +186,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // START THE GAME:
   startButton.addEventListener('click', () => {
+    intro.classList.add('hide')
+    grid.classList.remove('hide')
+    screen.classList.remove('hide')
+    scoreBoard.classList.remove('hide')
+    
     if (playing) return
     playing = true
 
@@ -187,6 +220,33 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     moveCars()
     const carTimer = setInterval(moveCars, 1000)
+
+    // TROOPER MOVEMENT:
+    function moveTrooper() {
+      cells.forEach(cell => cell.classList.remove('trooper'))
+      trooperArray.forEach((trooper) => {
+        cells[trooper].classList.add('trooper')
+      })
+      trooperArray = trooperArray.map((trooper) => {
+        if (trooper % width === 0) return trooper + width - 1
+        return trooper - 1
+      })
+      function checkCollision() {
+        if (cells[playerIdx].classList.contains('trooper')) {
+          clearInterval(timer)  
+          playing = false 
+          setTimeout(() => {
+            grid.classList.add('hide')
+          }, 200)
+          setTimeout(() => {
+            lose.classList.replace('hide', 'lose')
+          }, 400)
+        }  
+      } 
+      setInterval(checkCollision, 60)
+    }
+    moveTrooper()
+    const trooperTimer = setInterval(moveTrooper, 1000)
 
     // LOG MOVEMENT
     function moveLogs() {
@@ -239,22 +299,11 @@ document.addEventListener('DOMContentLoaded', () => {
       let randomBoba = logArray[0] + Math.floor(Math.random() * width)
 
       cells[randomBoba].classList.add('boba')
-
-      setTimeout((bobaThreat) => {
+      
+      setTimeout(() => {
         cells[randomBoba].classList.remove('boba')
       }, 5000)
     }, 2000)
-
-    if (cells[playerIdx].classList.contains('boba')) {
-      clearInterval(timer) 
-      playing = false  
-      setTimeout(() => {
-        grid.classList.add('hide')
-      }, 200)
-      setTimeout(() => {
-        lose.classList.replace('hide', 'lose')
-      }, 400)
-    }
   })
 
   // // WIN CONDITION:

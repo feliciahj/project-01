@@ -8,6 +8,7 @@ body {
   height: 100vh;
   justify-content: center;
   margin: 0;
+  background-color: black;
 }
 
 .grid {
@@ -20,64 +21,89 @@ body {
   justify-content: center;
   max-height: 600px;
   max-width: 600px;
+  border: solid;
+  border-color: rgb(14, 131, 233);
+  background-color: antiquewhite;
 }
 
 .grid div {
   flex-grow: 1;
   height: 9%;
   width: 9%;
-  background-color: blue;
+  border: 1px solid;
+  border-color: aliceblue;
 }
 
 .grid div.wall {
-background-color: rgb(117, 57, 57);
+/* background-color: rgb(117, 57, 57); */
 }
 
 .grid div.street {
-  background-color: white;
+  /* background-color: white; */
 }
 
 .grid div.yoda {
-  background-color: rgb(195, 245, 17);
+  background-image: url(https://media.giphy.com/media/EUcKlaja5qQWA/giphy.gif);
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position-x: 0;
+  background-position-y: 10px;
 }
 
 .grid div.home {
-  background-color: green;
-  background-size: 300px;
+  background-image: url(https://media.giphy.com/media/BhLo1r6oNmg5G/giphy.gif);
+  background-size: 50px;
+  background-repeat: no-repeat;
   background-position-x: 0;
   background-position-y: 0;
 }
 
 .grid div.car {
-  background-color: red;
-  background-size: 300px;
+  background-image: url(https://media.giphy.com/media/at9GBrZxSpi1W4ZQUp/giphy.gif);
+  background-size: 82px;
+  background-repeat: no-repeat;
+  background-position-x: -10px;
+  background-position-y: 3px;
+}
+
+.grid div.trooper {
+  background-image: url(https://media.giphy.com/media/jL7cmBKJqnyG4/giphy.gif);
+  background-size: 50px;
+  background-repeat: no-repeat;
   background-position-x: 0;
   background-position-y: 0;
 }
 
 .grid div.log {
-  background-color: yellow;
-  background-size: 300px;
+  background-image: url(https://www.pngix.com/pngfile/middle/138-1388741_millenium-falcon-png-star-wars-millenium-falcon-transparent.png);
+  background-size: 50px;
+  background-repeat: no-repeat;
   background-position-x: 0;
   background-position-y: 0;
 }
 
 .grid div.player {
-  background-color: rgb(228, 20, 193);
-  background-size: 300px;
+  background-image: url(https://media.giphy.com/media/7eR9XFuWVbBLi/giphy.gif);
+  background-size: 55px;
+  background-repeat: no-repeat;
   background-position-x: 0;
   background-position-y: 0;
 }
 
 .grid div.boba {
-  background-color: black;
+  background-image: url(https://media.giphy.com/media/5pT4s5TRbFoa1ABAHH/giphy.gif);
+  background-size: 55px;
+  background-repeat: no-repeat;
+  background-position-x: 0;
+  background-position-y: 0;
 }
 
-.screen {
+.timer {
   border: solid;
   width: 70px;
   height: 20px;
   text-align: center;
+  color: blueviolet;
 }
 
 .hide {
@@ -86,6 +112,8 @@ background-color: rgb(117, 57, 57);
 
 .win {
   font-size: 50px;
+  color: white;
+  background-image: url(https://media.giphy.com/media/JrMyqcNznjfx8g5sr2/giphy.gif);
 }
 
 .lose {
@@ -94,9 +122,11 @@ background-color: rgb(117, 57, 57);
 
 .scoreboard {
   border: solid;
-  width: 70px;
+  width: 100px;
   height: 20px;
+  font-size: 10px;
   text-align: center;
+  color: rgb(22, 255, 236);
 }
 
 
