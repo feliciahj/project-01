@@ -51,8 +51,9 @@ document.addEventListener('DOMContentLoaded', () => {
   let wallArray = [55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65]
   let streetArray = [66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 
     77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 
-    92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 
-    106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120]
+    92, 93, 94, 95, 96, 97, 98]
+  let hellArray = [99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120]
+  let skyArray = [1, 3, 5, 7, 9]
 
   let isOnLog = false
   let timer = null
@@ -84,6 +85,12 @@ document.addEventListener('DOMContentLoaded', () => {
   })
   streetArray.forEach(pebble => {
     cells[pebble].classList.add('street')
+  })
+  hellArray.forEach(fire => {
+    cells[fire].classList.add('hell')
+  })
+  skyArray.forEach(cloud => {
+    cells[cloud].classList.add('sky')
   })
 
   win.classList.add('hide')
@@ -251,7 +258,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // LOG MOVEMENT
     function moveLogs() {
       checkLog()
-      // checkBoba()
       cells.forEach(cell => cell.classList.remove('log'))
       logArray.forEach((log) => {
         cells[log].classList.add('log')
@@ -285,12 +291,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const yodaSurprise = setInterval(() => {
       let randomYoda = wallArray[0] + Math.floor(Math.random() * width)
 
-      cells[randomYoda].classList.remove('wall')
       cells[randomYoda].classList.add('yoda')
 
       setTimeout((yodaSurprise) => {
         cells[randomYoda].classList.remove('yoda')
-        cells[randomYoda].classList.add('wall')
       }, 1500)
     }, 1000)
     
