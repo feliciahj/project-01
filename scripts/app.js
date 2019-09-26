@@ -263,8 +263,8 @@ document.addEventListener('DOMContentLoaded', () => {
         cells[log].classList.add('log')
       })
       logArray = logArray.map((log) => {
-        if (log % width === 0) return log + width - 1
-        return log - 1
+        if (log % width === 10) return log - width + 1
+        return log + 1
       })
       if (isOnLog) {
         cells[playerIdx].classList.remove('player')

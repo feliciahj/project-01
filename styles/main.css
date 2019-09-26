@@ -13,6 +13,14 @@ body {
   background-repeat: no-repeat;
 }
 
+.starting {
+  background-image: url(https://media.giphy.com/media/UnEViu5sOVWVO/giphy.gif);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position-x: 0;
+  background-position-y: 0;
+}
+
 .grid {
   align-items: center;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
@@ -34,11 +42,11 @@ body {
 }
 
 .grid div.wall {
-background-image: url(https://i.ytimg.com/vi/TfGzuHvvT2k/hqdefault.jpg);
+/* background-image: url(https://i.ytimg.com/vi/TfGzuHvvT2k/hqdefault.jpg);
 background-size: contain;
 background-repeat: no-repeat;
 background-position-x: 0;
-background-position-y: 0;
+background-position-y: 0; */
 }
 
 .grid div.street {
@@ -46,75 +54,75 @@ background-position-y: 0;
 }
 
 .grid div.hell {
-  background-image: url(https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/7edaff79-abab-465d-9536-b6733ab1b4ca/d2hn9ri-794b61bf-781e-4d4c-b70c-1b327264dfdc.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzdlZGFmZjc5LWFiYWItNDY1ZC05NTM2LWI2NzMzYWIxYjRjYVwvZDJobjlyaS03OTRiNjFiZi03ODFlLTRkNGMtYjcwYy0xYjMyNzI2NGRmZGMuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.0FHqjPNmkfgoJdcsApOCC-vRFq5f1T9z1MogzoS3IPA);
+  background-image: url(https://p7.hiclipart.com/preview/474/533/290/pixel-art-game-sprite-8-bit.jpg);
   background-size: contain;
   background-repeat: no-repeat;
   background-position-x: 0;
-  background-position-y: 10px;
+  background-position-y: 0;
 }
 
-/* .grid div.sky {
-  background-image: url(https://ak8.picdn.net/shutterstock/videos/14444278/thumb/1.jpg);
+.grid div.sky {
+  /* background-image: url(https://ak8.picdn.net/shutterstock/videos/14444278/thumb/1.jpg);
   background-size: 70px;
   background-repeat: no-repeat;
   background-position-x: 0;
-  background-position-y: 10px;
-} */
+  background-position-y: 10px; */
+}
 
 .grid div.yoda {
-  background-image: url(https://media.giphy.com/media/EUcKlaja5qQWA/giphy.gif);
-  background-size: 100%;
+  background-image: url(images/llama.gif);
+  background-size: 60px;
   background-repeat: no-repeat;
   background-position-x: 0;
-  background-position-y: 10px;
+  background-position-y: 0;
 }
 
 .grid div.home {
-  background-image: url(https://media.giphy.com/media/BhLo1r6oNmg5G/giphy.gif);
-  background-size: 50px;
+  background-image: url(https://media.giphy.com/media/Titt7WbFzurny/giphy.gif);
+  background-size: 60px;
   background-repeat: no-repeat;
-  background-position-x: 0;
-  background-position-y: 0;
+  background-position-x: -1px;
+  background-position-y: 5px;
 }
 
 .grid div.car {
-  background-image: url(https://media.giphy.com/media/8Uyz68JpozWve/giphy.gif);
-  background-size: 82px;
-  background-repeat: no-repeat;
-  background-position-x: -10px;
-  background-position-y: 3px;
-}
-
-.grid div.trooper {
-  background-image: url(https://media.giphy.com/media/jL7cmBKJqnyG4/giphy.gif);
-  background-size: 50px;
-  background-repeat: no-repeat;
-  background-position-x: 0;
-  background-position-y: 0;
-}
-
-.grid div.log {
-  background-image: url(images/Millennium-Falcon-Star-Wars-PNG-Image-with-Transparent-Background.png);
-  background-size: 50px;
-  background-repeat: no-repeat;
-  background-position-x: 2;
-  background-position-y: 12px;
-}
-
-.grid div.player {
-  background-image: url(https://media.giphy.com/media/7eR9XFuWVbBLi/giphy.gif);
+  background-image: url(https://media.giphy.com/media/aotWWaGrXuNuo/giphy.gif);
   background-size: 55px;
   background-repeat: no-repeat;
   background-position-x: 0;
   background-position-y: 0;
 }
 
-.grid div.boba {
-  background-image: url(images/Boba-Fett-Free-PNG-Image.png);
-  background-size: 65px;
+.grid div.trooper {
+  background-image: url(https://414foto.com/image/96262-full_pixel-art-gif-transparent-pixel-art-de-chien-pixel-art-facile.gif);
+  background-size: 60px;
   background-repeat: no-repeat;
-  background-position-x: -7px;
-  background-position-y: -5px;
+  background-position-x: 0;
+  background-position-y: 7px;
+}
+
+.grid div.log {
+  background-image: url(https://thumbs.gfycat.com/EarnestUnrealisticIrishsetter.webp);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position-x: 0;
+  background-position-y: 0;
+}
+
+.grid div.player {
+  background-image: url(https://thumbs.gfycat.com/FluffyPersonalBorer.webp);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position-x: 0;
+  background-position-y: 0;
+}
+
+.grid div.boba {
+  background-image: url(https://thumbs.gfycat.com/AdorableCleverKoalabear.webp);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position-x: 0;
+  background-position-y: 0;
 }
 
 .timer {
@@ -142,7 +150,15 @@ background-position-y: 0;
 }
 
 .lose {
+  height: 600px;
+  width: 600px;
   font-size: 50px;
+  color: white;
+  background-image: url(https://414foto.com/image/96226-full_gif-halloween-skull-pixel-art-pixel-spooky-cool-gif-spoopy-all.gif);
+  background-size: 50%;
+  background-repeat: no-repeat;
+  background-position-x: 0;
+  background-position-y: 0px;
 }
 
 .scoreboard {
