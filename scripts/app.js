@@ -22,14 +22,17 @@
 // - Add points for hitting Yoda. DONE!
 // - Add kill condition for hitting Boba. DONE!
 // - Auto-generated Yoda score. DONE!
+// - Styling. DONE!
+// - Animation. DONE! 
+// - Sounds. DONE!
 
-//   TO DO:
-// - Styling, animation, sounds
 
 document.addEventListener('DOMContentLoaded', () => {
 
   const width = 11
   const grid = document.querySelector('.grid')
+  const table = document.querySelector('.table')
+  const tableTwo = document.querySelector('.tableTwo')
   const startButton = document.querySelector('.start')
   const resetButton = document.querySelector('.reset')
   const win = document.querySelector('.win')
@@ -178,6 +181,8 @@ document.addEventListener('DOMContentLoaded', () => {
       playing = false  
       setTimeout(() => {
         grid.classList.add('hide')
+        table.classList.add('hide')
+        tableTwo.classList.add('hide')
       }, 200)
       setTimeout(() => {
         lose.classList.replace('hide', 'lose')
@@ -206,6 +211,8 @@ document.addEventListener('DOMContentLoaded', () => {
       playing = false  
       setTimeout(() => {
         grid.classList.add('hide')
+        table.classList.add('hide')
+        tableTwo.classList.add('hide')
       }, 200)
       setTimeout(() => {
         lose.classList.replace('hide', 'lose')
@@ -219,6 +226,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     resetButton.classList.remove('hide')
     grid.classList.remove('hide')
+    table.classList.remove('hide')
+    tableTwo.classList.remove('hide')
     screen.classList.remove('hide')
     scoreBoard.classList.remove('hide')
     wrapper.classList.add('hide')
@@ -243,6 +252,8 @@ document.addEventListener('DOMContentLoaded', () => {
           playing = false 
           setTimeout(() => {
             grid.classList.add('hide')
+            table.classList.add('hide')
+            tableTwo.classList.add('hide')
           }, 200)
           setTimeout(() => {
             lose.classList.replace('hide', 'lose')
@@ -271,6 +282,8 @@ document.addEventListener('DOMContentLoaded', () => {
           playing = false 
           setTimeout(() => {
             grid.classList.add('hide')
+            table.classList.add('hide')
+            tableTwo.classList.add('hide')
           }, 200)
           setTimeout(() => {
             lose.classList.replace('hide', 'lose')
@@ -305,6 +318,8 @@ document.addEventListener('DOMContentLoaded', () => {
         playing = false 
         setTimeout(() => {
           grid.classList.add('hide')
+          table.classList.add('hide')
+          tableTwo.classList.add('hide')
         }, 200)
         setTimeout(() => {
           lose.classList.replace('hide', 'lose')
@@ -345,6 +360,8 @@ document.addEventListener('DOMContentLoaded', () => {
       clearInterval(timer)  
       setTimeout(() => {
         grid.classList.add('hide')
+        table.classList.add('hide')
+        tableTwo.classList.add('hide')
       }, 200)
       setTimeout(() => {
         win.classList.replace('hide', 'win')

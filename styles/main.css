@@ -67,12 +67,51 @@ justify-content: center;
   border: none;
   }
 
- .reset {
-    background-color: rgba(255, 255, 255, 0);
-    display: flex;
-    justify-content: center;
-    border: none;
+.reset {
+  background-color: rgba(255, 255, 255, 0);
+  display: flex;
+  justify-content: center;
+  border: none;
     }
+
+  .table {
+  display: flex;
+  flex-direction: column;
+  /* border: dotted;
+  border-color: rgb(81, 253, 1); */
+  padding: 5px;
+  margin: 0 0 0 20px;
+  }
+
+  .table img {
+    height: 47px;
+    width: 47px;
+    border: dotted;
+    border-color: rgb(253, 1, 219);
+  }
+
+  .tableTwo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    margin: 0 20px 0 0;
+  }
+
+  .tableTwo div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 47px;
+    width: 200px;
+    border: dotted;
+    border-color: rgb(253, 1, 219);
+    color: rgb(231, 231, 231);
+    font-size: 20px;
+    font-family: "dotty", Times, serif;
+    text-align: center;
+  }
 
 .grid {
   align-items: center;
@@ -191,8 +230,8 @@ justify-content: center;
 }
 
 .lose {
-  background-image: url(https://414foto.com/image/96226-full_gif-halloween-skull-pixel-art-pixel-spooky-cool-gif-spoopy-all.gif);
-  background-repeat: no-repeat;
+  /* background-image: url(https://414foto.com/image/96226-full_gif-halloween-skull-pixel-art-pixel-spooky-cool-gif-spoopy-all.gif);
+  background-repeat: no-repeat; */
 
 }
 
