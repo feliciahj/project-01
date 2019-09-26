@@ -23,7 +23,7 @@ body {
 
 .grid {
   align-items: center;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+  /* box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2); */
   display: flex;
   flex-grow: 1;
   flex-wrap: wrap;
@@ -31,8 +31,8 @@ body {
   justify-content: center;
   max-height: 600px;
   max-width: 600px;
-  border: 0.4px solid;
-  border-color: rgb(3, 68, 8);
+  border: 3px solid;
+  border-color: rgb(1, 17, 19);
 }
 
 .grid div {
@@ -42,31 +42,35 @@ body {
 }
 
 .grid div.wall {
-/* background-image: url(https://i.ytimg.com/vi/TfGzuHvvT2k/hqdefault.jpg);
-background-size: contain;
-background-repeat: no-repeat;
-background-position-x: 0;
-background-position-y: 0; */
-}
-
-.grid div.street {
-  /* background-color: rgb(145, 5, 5) ; */
-}
-
-.grid div.hell {
-  background-image: url(https://p7.hiclipart.com/preview/474/533/290/pixel-art-game-sprite-8-bit.jpg);
+  background-image: url(images/grass.gif);
   background-size: contain;
   background-repeat: no-repeat;
   background-position-x: 0;
-  background-position-y: 0;
+  background-position-y: 0px;
+}
+
+.grid div.street {
+  background-image: url(images/iceberg.gif);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position-x: 0;
+  background-position-y: 0px;
+}
+
+.grid div.hell {
+  background-image: url(images/sea.gif);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position-x: 0;
+  background-position-y: 0px;
 }
 
 .grid div.sky {
-  /* background-image: url(https://ak8.picdn.net/shutterstock/videos/14444278/thumb/1.jpg);
-  background-size: 70px;
+  background-image: url(images/fire.gif);
+  background-size: contain;
   background-repeat: no-repeat;
   background-position-x: 0;
-  background-position-y: 10px; */
+  background-position-y: 0px;
 }
 
 .grid div.yoda {
@@ -110,15 +114,15 @@ background-position-y: 0; */
 }
 
 .grid div.player {
-  background-image: url(https://thumbs.gfycat.com/FluffyPersonalBorer.webp);
+  background-image: url(https://media.giphy.com/media/11gZ1gy9uOz8CA/giphy.gif);
   background-size: contain;
   background-repeat: no-repeat;
   background-position-x: 0;
-  background-position-y: 0;
+  background-position-y: 2px;
 }
 
 .grid div.boba {
-  background-image: url(https://thumbs.gfycat.com/AdorableCleverKoalabear.webp);
+  background-image: url(https://media.giphy.com/media/YB9mintb78SiZz8zkA/giphy.gif);
   background-size: contain;
   background-repeat: no-repeat;
   background-position-x: 0;
@@ -155,6 +159,7 @@ background-position-y: 0; */
   font-size: 50px;
   color: white;
   background-image: url(https://414foto.com/image/96226-full_gif-halloween-skull-pixel-art-pixel-spooky-cool-gif-spoopy-all.gif);
+  /* background-image: url(https://media.giphy.com/media/Be0YVQAdVdm4E/giphy.gif); */
   background-size: 50%;
   background-repeat: no-repeat;
   background-position-x: 0;

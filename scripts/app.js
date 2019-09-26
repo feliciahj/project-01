@@ -38,11 +38,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const screen = document.querySelector('.timer')
   const scoreBoard = document.querySelector('.scoreboard')
   const currentScore = document.querySelector('#amount')
+  const audio = document.querySelector('audio')
+
   
   const cells = []
   let playing = false
   let playerIdx = 115
   let scoreCounter = 0
+
+  const audioStart = new Audio('sounds/force.mp3')
+  const audioWin = new Audio('sounds/awesome.mp3')
+  const audioLose = new Audio('sounds/stupid.wav')
+  const audioLlama = new Audio('sounds/alpaca_mating.wav')
   
   let homeArray = [0, 2, 4, 6, 8, 10]
   let carArray = [76, 80, 93]
@@ -145,6 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // SCORE:
   function updateScore() {
     if (cells[playerIdx].classList.contains('yoda')) {
+      audioLlama.play()
       scoreCounter += 10
       currentScore.innerHTML = `You have ${scoreCounter} points!`
     }
@@ -153,6 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // CHECKING FOR BOBA:
   function bobaCheck() {
     if (cells[playerIdx].classList.contains('boba')) {
+      audioLose.play()
       clearInterval(timer) 
       playing = false  
       setTimeout(() => {
@@ -176,10 +185,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // DROWN CONDITION
   function checkIfInWater() {
     if (cells[playerIdx].classList.contains('log')) {
-      console.log('Riding')
+      console.log('riding')
     } else if (cells[playerIdx].classList.contains('home')) {
       console.log('Win')
     } else if (playerIdx <= 55) {
+      audioLose.play()
       clearInterval(timer) 
       playing = false  
       setTimeout(() => {
@@ -193,11 +203,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // START THE GAME:
   startButton.addEventListener('click', () => {
+    audioStart.play()
+
     intro.classList.add('hide')
     grid.classList.remove('hide')
     screen.classList.remove('hide')
     scoreBoard.classList.remove('hide')
-    
+
     if (playing) return
     playing = true
 
@@ -213,6 +225,7 @@ document.addEventListener('DOMContentLoaded', () => {
       })
       function checkCollision() {
         if (cells[playerIdx].classList.contains('car')) {
+          audioLose.play()
           clearInterval(timer)  
           playing = false 
           setTimeout(() => {
@@ -240,6 +253,7 @@ document.addEventListener('DOMContentLoaded', () => {
       })
       function checkCollision() {
         if (cells[playerIdx].classList.contains('trooper')) {
+          audioLose.play()
           clearInterval(timer)  
           playing = false 
           setTimeout(() => {
@@ -268,10 +282,11 @@ document.addEventListener('DOMContentLoaded', () => {
       })
       if (isOnLog) {
         cells[playerIdx].classList.remove('player')
-        playerIdx--
+        playerIdx++
         cells[playerIdx].classList.add('player')
       }
-      if (isOnLog && playerIdx % width === 0) {
+      if (isOnLog && playerIdx % width === 10) {
+        audioLose.play()
         clearInterval(timer)
         clearInterval(logTimer) 
         playing = false 
@@ -313,6 +328,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // // WIN CONDITION:
   function winCondition() {
     if (cells[playerIdx].classList.contains('home')) {
+      audioWin.play()
       clearInterval(timer)  
       setTimeout(() => {
         grid.classList.add('hide')
