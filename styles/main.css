@@ -12,18 +12,70 @@ body {
   background-size: 100%;
   background-repeat: no-repeat;
 }
-
-.starting {
-  background-image: url(https://media.giphy.com/media/UnEViu5sOVWVO/giphy.gif);
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position-x: 0;
-  background-position-y: 0;
+.wrapper {
+  display: flex;
+  flex-direction: column;
 }
+
+.wrapper2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 0 0 20px;
+}
+
+.timer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-style: dotted;
+  width: 100px;
+  height: 40px;
+  text-align: center;
+  color: blueviolet;
+  margin: 20px;
+}
+
+.scoreboard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-style: dotted;
+  width: 100px;
+  height: 40px;
+  font-size: 15px;
+  text-align: center;
+  color: rgb(253, 249, 2);
+  margin: 20px;
+}
+
+.intro img {
+height: auto;
+width: 100%;
+}
+
+.button {
+background-color: rgba(255, 255, 255, 0);
+display: flex;
+justify-content: center;
+}
+
+.button .start {
+  background-color: rgba(255, 255, 255, 0);
+  display: flex;
+  justify-content: center;
+  border: none;
+  }
+
+ .reset {
+    background-color: rgba(255, 255, 255, 0);
+    display: flex;
+    justify-content: center;
+    border: none;
+    }
 
 .grid {
   align-items: center;
-  /* box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2); */
   display: flex;
   flex-grow: 1;
   flex-wrap: wrap;
@@ -31,8 +83,8 @@ body {
   justify-content: center;
   max-height: 600px;
   max-width: 600px;
-  border: 3px solid;
-  border-color: rgb(1, 17, 19);
+  border: dotted;
+  border-color: rgb(81, 253, 1);
 }
 
 .grid div {
@@ -98,7 +150,7 @@ body {
 }
 
 .grid div.trooper {
-  background-image: url(https://414foto.com/image/96262-full_pixel-art-gif-transparent-pixel-art-de-chien-pixel-art-facile.gif);
+  background-image: url(https://data.whicdn.com/images/172796533/original.gif);
   background-size: 60px;
   background-repeat: no-repeat;
   background-position-x: 0;
@@ -129,50 +181,20 @@ body {
   background-position-y: 0;
 }
 
-.timer {
-  border: solid;
-  width: 70px;
-  height: 20px;
-  text-align: center;
-  color: blueviolet;
-}
-
 .hide {
   display: none;
 }
 
 .win {
-  height: 600px;
-  width: 600px;
-  font-size: 50px;
-  color: white;
-  background-image: url(https://media.giphy.com/media/JrMyqcNznjfx8g5sr2/giphy.gif);
-  background-size: 50%;
-  background-repeat: no-repeat;
-  background-position-x: 0;
-  background-position-y: 0px;
+  /* height: auto;
+  width: 100%; */
 }
 
 .lose {
-  height: 600px;
-  width: 600px;
-  font-size: 50px;
-  color: white;
   background-image: url(https://414foto.com/image/96226-full_gif-halloween-skull-pixel-art-pixel-spooky-cool-gif-spoopy-all.gif);
-  /* background-image: url(https://media.giphy.com/media/Be0YVQAdVdm4E/giphy.gif); */
-  background-size: 50%;
   background-repeat: no-repeat;
-  background-position-x: 0;
-  background-position-y: 0px;
+
 }
 
-.scoreboard {
-  border: solid;
-  width: 100px;
-  height: 20px;
-  font-size: 10px;
-  text-align: center;
-  color: rgb(22, 255, 236);
-}
 
 

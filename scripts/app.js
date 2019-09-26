@@ -29,7 +29,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   const width = 11
-  const intro = document.querySelector('.intro')
   const grid = document.querySelector('.grid')
   const startButton = document.querySelector('.start')
   const resetButton = document.querySelector('.reset')
@@ -38,8 +37,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const screen = document.querySelector('.timer')
   const scoreBoard = document.querySelector('.scoreboard')
   const currentScore = document.querySelector('#amount')
-  const audio = document.querySelector('audio')
-
+  const logo = document.querySelector('.intro')
+  const header = document.querySelector('header')
+  const wrapper = document.querySelector('.wrapper')
   
   const cells = []
   let playing = false
@@ -59,11 +59,23 @@ document.addEventListener('DOMContentLoaded', () => {
   let streetArray = [66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 
     77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 
     92, 93, 94, 95, 96, 97, 98]
-  let hellArray = [99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120]
+  let hellArray = [99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 
+    109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120]
   let skyArray = [1, 3, 5, 7, 9]
 
   let isOnLog = false
   let timer = null
+
+ 
+  header.addEventListener('mouseover', e => {
+    logo.classList.add('animated')
+    logo.classList.add('flip')
+  })
+
+  header.addEventListener('mouseout', e => {
+    logo.classList.remove('animated')
+    logo.classList.remove('flip')
+  })
 
   // SETTING UP THE BOARD:
   for (let i = 0; i < width ** 2; i++) {
@@ -154,7 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (cells[playerIdx].classList.contains('yoda')) {
       audioLlama.play()
       scoreCounter += 10
-      currentScore.innerHTML = `You have ${scoreCounter} points!`
+      currentScore.innerHTML = `${scoreCounter} points`
     }
   }
 
@@ -205,10 +217,11 @@ document.addEventListener('DOMContentLoaded', () => {
   startButton.addEventListener('click', () => {
     audioStart.play()
 
-    intro.classList.add('hide')
+    resetButton.classList.remove('hide')
     grid.classList.remove('hide')
     screen.classList.remove('hide')
     scoreBoard.classList.remove('hide')
+    wrapper.classList.add('hide')
 
     if (playing) return
     playing = true
@@ -336,6 +349,12 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => {
         win.classList.replace('hide', 'win')
       }, 400)
+
+      win.addEventListener('animationstart', e => {
+        logo.classList.add('animated')
+        logo.classList.add('flip')
+      })
+
     }
   } 
 
@@ -345,5 +364,4 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 
 })
-
 

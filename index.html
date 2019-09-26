@@ -7,22 +7,45 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Froggy</title>
   <script src="scripts/app.js"></script>
+  <link rel="stylesheet" href="styles/animate.css">
   <link rel="stylesheet" href="styles/main.css">
 </head>
 
 <body>
-   <div class="intro"></div>
+  <div class="wrapper">
+    <header>
+      <div class="intro">
+        <img src="https://fontmeme.com/permalink/190926/ff4d8b6cc09eeaf61f4aefbf41077d95.png" alt="SAFE SPACE">
+      </div>
+    </header>
+    <div class="button">
+      <button class="start">
+        <img src="https://fontmeme.com/permalink/190926/c2babc6d57b0a24f6c94589fcacef778.png" alt="START">
+      </button>
+    </div>
+  </div>
+
   <div class="grid hide"></div>
-  <div class="starting"></div>
-  <div class="button">
-    <button class="start">START</button>
-    <button class="reset">RESET</button>
+
+  <div class="win">
+      <img src="https://fontmeme.com/permalink/190926/ecd51eedd533c9cd38490ca69a82d6ed.png" alt="YOU WIN!">
+    </div>
+
+    <div class="lose">
+        <img src="https://fontmeme.com/permalink/190926/d848f4084b76ee21e4ab1d1bbcd85649.png" alt="YOU LOSE...">
+      </div>
+
+  <div class="wrapper2">
+      <button class="reset hide">
+          <img src="https://fontmeme.com/permalink/190926/68467c082dc6a05b42812c659ad3e8e0.png" alt="PLAY AGAIN">
+        </button>
+    
+      <div class="timer hide">
+        <div class="screen"><time></time></div>
+      </div>
+      <div class="scoreboard hide"><span id="amount"></span></div>
   </div>
-  <div class="timer hide">
-    <div class="screen"><time></time></div>
-  </div>
-  <div class="scoreboard hide"><span id="amount"></span></div>
-  <div class="win">YOU WIN!</div>
-  <div class="lose">YOU LOSE!</div>
+  
 </body>
+
 </html>
