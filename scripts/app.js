@@ -40,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const screen = document.querySelector('.timer')
   const scoreBoard = document.querySelector('.scoreboard')
   const currentScore = document.querySelector('#amount')
+  const instructions = document.querySelector('.instructions')
   const logo = document.querySelector('.intro')
   const header = document.querySelector('header')
   const wrapper = document.querySelector('.wrapper')
@@ -183,10 +184,11 @@ document.addEventListener('DOMContentLoaded', () => {
         grid.classList.add('hide')
         table.classList.add('hide')
         tableTwo.classList.add('hide')
+        instructions.classList.add('hide')
       }, 200)
       setTimeout(() => {
         lose.classList.replace('hide', 'lose')
-      }, 400)
+      }, 200)
     }
   }
 
@@ -213,10 +215,11 @@ document.addEventListener('DOMContentLoaded', () => {
         grid.classList.add('hide')
         table.classList.add('hide')
         tableTwo.classList.add('hide')
+        instructions.classList.add('hide')
       }, 200)
       setTimeout(() => {
         lose.classList.replace('hide', 'lose')
-      }, 400)
+      }, 200)
     }
   }
 
@@ -231,6 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
     screen.classList.remove('hide')
     scoreBoard.classList.remove('hide')
     wrapper.classList.add('hide')
+    instructions.classList.remove('hide')
 
     if (playing) return
     playing = true
@@ -254,10 +258,11 @@ document.addEventListener('DOMContentLoaded', () => {
             grid.classList.add('hide')
             table.classList.add('hide')
             tableTwo.classList.add('hide')
+            instructions.classList.add('hide')
           }, 200)
           setTimeout(() => {
             lose.classList.replace('hide', 'lose')
-          }, 400)
+          }, 200)
         }  
       } 
       setInterval(checkCollision, 60)
@@ -284,10 +289,11 @@ document.addEventListener('DOMContentLoaded', () => {
             grid.classList.add('hide')
             table.classList.add('hide')
             tableTwo.classList.add('hide')
+            instructions.classList.add('hide')
           }, 200)
           setTimeout(() => {
             lose.classList.replace('hide', 'lose')
-          }, 400)
+          }, 200)
         }  
       } 
       setInterval(checkCollision, 60)
@@ -320,10 +326,11 @@ document.addEventListener('DOMContentLoaded', () => {
           grid.classList.add('hide')
           table.classList.add('hide')
           tableTwo.classList.add('hide')
+          instructions.classList.add('hide')
         }, 200)
         setTimeout(() => {
           lose.classList.replace('hide', 'lose')
-        }, 400)
+        }, 200)
       }
     }
     moveLogs()
@@ -351,6 +358,7 @@ document.addEventListener('DOMContentLoaded', () => {
         cells[randomBoba].classList.remove('boba')
       }, 5000)
     }, 2000)
+
   })
 
   // // WIN CONDITION:
@@ -362,16 +370,11 @@ document.addEventListener('DOMContentLoaded', () => {
         grid.classList.add('hide')
         table.classList.add('hide')
         tableTwo.classList.add('hide')
+        instructions.classList.add('hide')
       }, 200)
       setTimeout(() => {
         win.classList.replace('hide', 'win')
-      }, 400)
-
-      win.addEventListener('animationstart', e => {
-        logo.classList.add('animated')
-        logo.classList.add('flip')
-      })
-
+      }, 200)
     }
   } 
 
