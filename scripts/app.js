@@ -1,31 +1,37 @@
-//   STEPS TO COMPLETE GAME:
+//*************************************************************************** MY STEP BY STEP GUIDE *********************************************************
+
 // - Make grid for the board: 10x10 (referencing mike's code), and enable the charachter across the board (referencing mike's code). DONE!
 // - Make it start on the bottom row in the middle on load. DONE!
-// - Win condition is getting a charachter to one home cell. DONE!
+// - Win condition is getting a charachter to one alien cell. DONE!
 // - Make a simple obstacles that doesnt move. DONE!
 // - Deal with collision - Use if statements with === to figure out whether two things are in the same cell? DONE!
 // - Add different events for whether you charachter is "riding" on the element, or beeing "killed" by the element? DONE!
-// - Make two logs and make them move. DONE!
+// - Make two unicorns and make them move. DONE!
 // - Make the player jump. DONE!
 // - Start game button that makes everything start moving. DONE!
 // - Reset button resetting the game. DONE!
-// - Move logs. DONE!
-// - Attach player to the logs. DONE!
+// - Move unicorns. DONE!
+// - Attach player to the unicorns. DONE!
 // - Timer and display counter. DONE!
-// - Set up so that if the player rides to the end of the board on the log you lose. DONE!
+// - Set up so that if the player rides to the end of the board on the unicorn you lose. DONE!
 // - Set up the water cells properly. DONE!
-// - Something is screwed up with how to jump off the log - can't clear the interval properly, and the timer doesn't reset. DONE!
+// - Something is screwed up with how to jump off the unicorn - can't clear the interval properly, and the timer doesn't reset. DONE!
 // - Cannot clear the timer interval for when in the water. DONE!
-// - Display and remove Yoda at random? DONE!
-// - Display Boba Fett at random? DONE!
+// - Display and remove Llama at random? DONE!
+// - Display monster at random? DONE!
 // - Displaying win AND lose on win. FIX! DONE!
-// - Add points for hitting Yoda. DONE!
-// - Add kill condition for hitting Boba. DONE!
-// - Auto-generated Yoda score. DONE!
+// - Add points for hitting Llama. DONE!
+// - Add kill condition for hitting monster. DONE!
+// - Auto-generated Llama score. DONE!
 // - Styling. DONE!
 // - Animation. DONE! 
 // - Sounds. DONE!
 
+//   STILL TO FIX:
+// - Collision with monster isn't triggering loose condition;
+// - Would like to move the timer into keystrokes as trigger, but then the lose conditions don't stop the timer properly because they are all in a different function?
+
+//*************************************************************************** THE BEGINNING *****************************************************************
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -41,6 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const scoreBoard = document.querySelector('.scoreboard')
   const currentScore = document.querySelector('#amount')
   const instructions = document.querySelector('.instructions')
+  const game = document.querySelector('.game')
   const logo = document.querySelector('.intro')
   const header = document.querySelector('header')
   const wrapper = document.querySelector('.wrapper')
@@ -55,22 +62,23 @@ document.addEventListener('DOMContentLoaded', () => {
   const audioLose = new Audio('sounds/stupid.wav')
   const audioLlama = new Audio('sounds/alpaca_mating.wav')
   
-  let homeArray = [0, 2, 4, 6, 8, 10]
-  let carArray = [76, 80, 93]
-  let trooperArray = [73, 89, 97]
-  let logArray = [12, 13, 14, 15, 35, 36, 37, 28, 29, 30, 31]
-  let wallArray = [55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65]
-  let streetArray = [66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 
+  let alienArray = [1, 3, 5, 7, 9]
+  let harryArray = [76, 80, 93]
+  let ghostArray = [73, 89, 97]
+  let unicornArray = [12, 13, 14, 15, 35, 36, 37, 28, 29, 30, 31]
+  let grassArray = [55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65]
+  let icebergArray = [66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 
     77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 
     92, 93, 94, 95, 96, 97, 98]
-  let hellArray = [99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 
+  let antarcticaArray = [99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 
     109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120]
-  let skyArray = [1, 3, 5, 7, 9]
+  let fireArray = [0, 2, 4, 6, 8, 10]
 
-  let isOnLog = false
+  let isOnUnicorn = false
   let timer = null
 
- 
+  //  *****************************************************************************************************************************************************
+
   header.addEventListener('mouseover', e => {
     logo.classList.add('animated')
     logo.classList.add('flip')
@@ -81,7 +89,8 @@ document.addEventListener('DOMContentLoaded', () => {
     logo.classList.remove('flip')
   })
 
-  // SETTING UP THE BOARD:
+  //  *************************************************************************** SETTING UP THE BOARD *****************************************************
+
   for (let i = 0; i < width ** 2; i++) {
     const cell = document.createElement('DIV')
 
@@ -91,36 +100,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
   cells[playerIdx].classList.add('player')
 
-  homeArray.forEach(house => {
-    cells[house].classList.add('home')
+  alienArray.forEach(house => {
+    cells[house].classList.add('alien')
   })
-  carArray.forEach(car => {
-    cells[car].classList.add('car')
+  harryArray.forEach(harry => {
+    cells[harry].classList.add('harry')
   })
-  trooperArray.forEach(trooper => {
-    cells[trooper].classList.add('trooper')
+  ghostArray.forEach(ghost => {
+    cells[ghost].classList.add('ghost')
   })
-  logArray.forEach(log => {
-    cells[log].classList.add('log')
+  unicornArray.forEach(unicorn => {
+    cells[unicorn].classList.add('unicorn')
   })
-  wallArray.forEach(brick => {
-    cells[brick].classList.add('wall')
+  grassArray.forEach(brick => {
+    cells[brick].classList.add('grass')
   })
-  streetArray.forEach(pebble => {
-    cells[pebble].classList.add('street')
+  icebergArray.forEach(pebble => {
+    cells[pebble].classList.add('iceberg')
   })
-  hellArray.forEach(fire => {
-    cells[fire].classList.add('hell')
+  antarcticaArray.forEach(fire => {
+    cells[fire].classList.add('antarctica')
   })
-  skyArray.forEach(cloud => {
-    cells[cloud].classList.add('sky')
+  fireArray.forEach(cloud => {
+    cells[cloud].classList.add('fire')
   })
 
   win.classList.add('hide')
   lose.classList.add('hide')
 
+  //  *************************************************************************** KEYSTROKE MOVEMENTS FOR THE PLAYER *****************************************
 
-  // KEYSTROKE MOVEMENTS FOR THE PLAYER:
   document.addEventListener('keyup', (e) => {
 
     cells[playerIdx].classList.remove('player')
@@ -147,13 +156,14 @@ document.addEventListener('DOMContentLoaded', () => {
     cells[playerIdx].classList.add('player')
 
     // CHECKING CONDITIONS AT EACH PLAYER MOVE:
-    winCondition(playerIdx, homeArray)
+    winCondition(playerIdx, alienArray)
     checkIfInWater()
     updateScore()
-    bobaCheck()
+    monsterCheck()
   })
 
-  // TIMER:
+  //*************************************************************************** TIMER **********************************************************************
+
   let milliseconds = 0
   function timerThing() {
     timer = setInterval(() => {
@@ -165,18 +175,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 17)
   }
 
-  // SCORE:
+  //*************************************************************************** SCORE ***********************************************************************
+  
   function updateScore() {
-    if (cells[playerIdx].classList.contains('yoda')) {
+    if (cells[playerIdx].classList.contains('llama')) {
       audioLlama.play()
       scoreCounter += 10
       currentScore.innerHTML = `${scoreCounter} points`
     }
   }
 
-  // CHECKING FOR BOBA:
-  function bobaCheck() {
-    if (cells[playerIdx].classList.contains('boba')) {
+  //*************************************************************************** CHECKING FOR MONSTER ********************************************************
+  
+  function monsterCheck() {
+    if (cells[playerIdx].classList.contains('monster')) {
+      console.log('im on a monster')
       audioLose.play()
       clearInterval(timer) 
       playing = false  
@@ -185,6 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
         table.classList.add('hide')
         tableTwo.classList.add('hide')
         instructions.classList.add('hide')
+        game.classList.add('hide')
       }, 200)
       setTimeout(() => {
         lose.classList.replace('hide', 'lose')
@@ -192,22 +206,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // CONDITION FOR PLAYER ON LOG:
-  function checkLog() {
-    if (cells[playerIdx].classList.contains('log')) {
-      isOnLog = true
+  //*************************************************************************** CHECKING IF ON UNICORN ******************************************************
+  
+  function checkUnicorn() {
+    if (cells[playerIdx].classList.contains('unicorn')) {
+      isOnUnicorn = true
     } else {
-      isOnLog = false
+      isOnUnicorn = false
     }
   }
 
-  // DROWN CONDITION
+  //*************************************************************************** LOST IN SPACE CONDITION ******************************************************
+  
   function checkIfInWater() {
-    if (cells[playerIdx].classList.contains('log')) {
-      console.log('riding')
-    } else if (cells[playerIdx].classList.contains('home')) {
-      console.log('Win')
-    } else if (playerIdx <= 55) {
+    if (cells[playerIdx].classList.contains('unicorn')) {
+      // console.log('riding')
+      console.log(cells[playerIdx].classList)
+    } else if (cells[playerIdx].classList.contains('alien')) {
+      // console.log('Win')
+    } else if (playerIdx <= 54) {
+      console.log('this is triggered')
       audioLose.play()
       clearInterval(timer) 
       playing = false  
@@ -216,6 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
         table.classList.add('hide')
         tableTwo.classList.add('hide')
         instructions.classList.add('hide')
+        game.classList.add('hide')
       }, 200)
       setTimeout(() => {
         lose.classList.replace('hide', 'lose')
@@ -223,7 +242,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // START THE GAME:
+  //*************************************************************************** STARTING THE GAME ***********************************************************
+  
   startButton.addEventListener('click', () => {
     audioStart.play()
 
@@ -235,22 +255,24 @@ document.addEventListener('DOMContentLoaded', () => {
     scoreBoard.classList.remove('hide')
     wrapper.classList.add('hide')
     instructions.classList.remove('hide')
+    game.classList.remove('hide')
 
     if (playing) return
     playing = true
 
-    // CAR MOVEMENT:
-    function moveCars() {
-      cells.forEach(cell => cell.classList.remove('car'))
-      carArray.forEach((car) => {
-        cells[car].classList.add('car')
+    // ************** HARRY MOVEMENT *************************
+
+    function moveHarry() {
+      cells.forEach(cell => cell.classList.remove('harry'))
+      harryArray.forEach((harry) => {
+        cells[harry].classList.add('harry')
       })
-      carArray = carArray.map((car) => {
-        if (car % width === 0) return car + width - 1
-        return car - 1
+      harryArray = harryArray.map((harry) => {
+        if (harry % width === 0) return harry + width - 1
+        return harry - 1
       })
       function checkCollision() {
-        if (cells[playerIdx].classList.contains('car')) {
+        if (cells[playerIdx].classList.contains('harry')) {
           audioLose.play()
           clearInterval(timer)  
           playing = false 
@@ -259,6 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
             table.classList.add('hide')
             tableTwo.classList.add('hide')
             instructions.classList.add('hide')
+            game.classList.add('hide')
           }, 200)
           setTimeout(() => {
             lose.classList.replace('hide', 'lose')
@@ -267,21 +290,22 @@ document.addEventListener('DOMContentLoaded', () => {
       } 
       setInterval(checkCollision, 60)
     }
-    moveCars()
-    const carTimer = setInterval(moveCars, 1000)
+    moveHarry()
+    const harryTimer = setInterval(moveHarry, 1000)
 
-    // TROOPER MOVEMENT:
-    function moveTrooper() {
-      cells.forEach(cell => cell.classList.remove('trooper'))
-      trooperArray.forEach((trooper) => {
-        cells[trooper].classList.add('trooper')
+    // ************** GHOST MOVEMENT *************************
+
+    function moveGhost() {
+      cells.forEach(cell => cell.classList.remove('ghost'))
+      ghostArray.forEach((ghost) => {
+        cells[ghost].classList.add('ghost')
       })
-      trooperArray = trooperArray.map((trooper) => {
-        if (trooper % width === 0) return trooper + width - 1
-        return trooper - 1
+      ghostArray = ghostArray.map((ghost) => {
+        if (ghost % width === 0) return ghost + width - 1
+        return ghost - 1
       })
       function checkCollision() {
-        if (cells[playerIdx].classList.contains('trooper')) {
+        if (cells[playerIdx].classList.contains('ghost')) {
           audioLose.play()
           clearInterval(timer)  
           playing = false 
@@ -290,6 +314,7 @@ document.addEventListener('DOMContentLoaded', () => {
             table.classList.add('hide')
             tableTwo.classList.add('hide')
             instructions.classList.add('hide')
+            game.classList.add('hide')
           }, 200)
           setTimeout(() => {
             lose.classList.replace('hide', 'lose')
@@ -298,72 +323,83 @@ document.addEventListener('DOMContentLoaded', () => {
       } 
       setInterval(checkCollision, 60)
     }
-    moveTrooper()
-    const trooperTimer = setInterval(moveTrooper, 1000)
+    moveGhost()
+    const ghostTimer = setInterval(moveGhost, 1000)
 
-    // LOG MOVEMENT
-    function moveLogs() {
-      checkLog()
-      cells.forEach(cell => cell.classList.remove('log'))
-      logArray.forEach((log) => {
-        cells[log].classList.add('log')
+    // ************** UNICORN MOVEMENT *************************
+
+    function moveUnicorn() {
+      checkUnicorn()
+      cells.forEach(cell => cell.classList.remove('unicorn'))
+      unicornArray.forEach((unicorn) => {
+        cells[unicorn].classList.add('unicorn')
       })
-      logArray = logArray.map((log) => {
-        if (log % width === 10) return log - width + 1
-        return log + 1
+      unicornArray = unicornArray.map((unicorn) => {
+        if (unicorn % width === 10) return unicorn - width + 1
+        return unicorn + 1
       })
-      if (isOnLog) {
+      if (isOnUnicorn) {
         cells[playerIdx].classList.remove('player')
         playerIdx++
         cells[playerIdx].classList.add('player')
       }
-      if (isOnLog && playerIdx % width === 10) {
+      if (isOnUnicorn && playerIdx % width === 10) {
         audioLose.play()
         clearInterval(timer)
-        clearInterval(logTimer) 
+        clearInterval(unicornTimer) 
         playing = false 
         setTimeout(() => {
           grid.classList.add('hide')
           table.classList.add('hide')
           tableTwo.classList.add('hide')
           instructions.classList.add('hide')
+          game.classList.add('hide')
         }, 200)
         setTimeout(() => {
           lose.classList.replace('hide', 'lose')
         }, 200)
       }
     }
-    moveLogs()
-    const logTimer = setInterval(moveLogs, 1000)
+    moveUnicorn()
+    const unicornTimer = setInterval(moveUnicorn, 700)
     timerThing()
+    monsterCheck()
 
-    // RANDOM YODA:
-    const yodaSurprise = setInterval(() => {
-      let randomYoda = wallArray[0] + Math.floor(Math.random() * width)
+    // ************** RANDOM LLAMAS *************************
 
-      cells[randomYoda].classList.add('yoda')
+    const llamaSurprise = setInterval(() => {
+      const randomLlama = grassArray[0] + Math.floor(Math.random() * width)
 
-      setTimeout((yodaSurprise) => {
-        cells[randomYoda].classList.remove('yoda')
+      cells[randomLlama].classList.add('llama')
+
+      setTimeout((llamaSurprise) => {
+        cells[randomLlama].classList.remove('llama')
       }, 1500)
     }, 1000)
     
-    // RANDOM BOBA:
-    const bobaThreat = setInterval(() => {
-      let randomBoba = logArray[0] + Math.floor(Math.random() * width)
+    // ************** RANDOM MONSTERS *************************
 
-      cells[randomBoba].classList.add('boba')
+    const monsterThreat = setInterval(() => {
+      const randomMonster = unicornArray[0] + Math.floor(Math.random() * width)
+
+      cells[randomMonster].classList.add('monster')
       
       setTimeout(() => {
-        cells[randomBoba].classList.remove('boba')
+        cells[randomMonster].classList.remove('monster')
       }, 5000)
     }, 2000)
-
   })
-
-  // // WIN CONDITION:
+  
+  //*************************************************************************** WIN CONDITION ***************************************************************
+  
+  let allHome = 0
   function winCondition() {
-    if (cells[playerIdx].classList.contains('home')) {
+    if (cells[playerIdx].classList.contains('alien') && allHome < 4) {
+      console.log('one penguin is home, count is ', allHome + 1)
+      playerIdx = 115 
+      cells[playerIdx].classList.add('player')
+      allHome++
+    } else if (cells[playerIdx].classList.contains('alien') && allHome === 4) {
       audioWin.play()
       clearInterval(timer)  
       setTimeout(() => {
@@ -371,17 +407,20 @@ document.addEventListener('DOMContentLoaded', () => {
         table.classList.add('hide')
         tableTwo.classList.add('hide')
         instructions.classList.add('hide')
+        game.classList.add('hide')
       }, 200)
       setTimeout(() => {
         win.classList.replace('hide', 'win')
       }, 200)
     }
-  } 
-
-  // RESET BUTTON:
+  }
+  
+  //*************************************************************************** RESET GAME BUTTON ***********************************************************
   resetButton.addEventListener('click', () => {
     location.reload(1)
   })
+
+  //*************************************************************************** THE END *********************************************************************
 
 })
 
