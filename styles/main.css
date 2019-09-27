@@ -25,6 +25,20 @@ body {
   margin: 0 0 0 30px;
 }
 
+.welcome {
+  display: flex;
+ align-items: center;
+}
+
+.welcome img {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  height: 40px;
+  width: 40px;
+  margin: 10px;
+}
+
 .timer {
   display: flex;
   align-items: center;

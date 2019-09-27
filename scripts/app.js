@@ -49,6 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const instructions = document.querySelector('.instructions')
   const game = document.querySelector('.game')
   const logo = document.querySelector('.intro')
+  const welcome = document.querySelector('.welcome')
   const header = document.querySelector('header')
   const wrapper = document.querySelector('.wrapper')
   
