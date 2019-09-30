@@ -1,2 +1,2 @@
 # project-01
-Snake game
+SPACE PENGUINS
