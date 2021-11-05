@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // ALLOWING THE PLAYER TO JUMP:
       case 32: {
         e.preventDefault()
-        if (y > 0) playerIdx -= width * 2
+        if (y > 0) playerIdx -= width * (y > 1 ? 2 : 1)
       }
         break 
     } 
